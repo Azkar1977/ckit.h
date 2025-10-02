@@ -225,12 +225,35 @@ void unit_test_map_swap()
 	map_free(m);
 }
 
+void unit_test_ssort()
+{
+	Map m = { 0 };
+	const char* keys[] = { "Banana", "apple", "carrot", "Apple", "banana" };
+
+	for (int i = 0; i < sizeof(keys)/sizeof(keys[0]); ++i) {
+		const char* s = sintern(keys[i]);
+		map_add(m, s, i);
+	}
+
+	// Sort case sensitive.
+	map_ssort(m, 0);
+
+	for (int i = 1; i < m.size; ++i) {
+		const char* prev = (const char*)m.keys[i - 1];
+		const char* curr = (const char*)m.keys[i];
+		assert(strcmp(prev, curr) <= 0);
+	}
+
+	map_free(m);
+}
+
 void unit_test()
 {
 	unit_test_array();
 	unit_test_map_basic();
 	unit_test_map_swap();
 	unit_test_intern();
+	unit_test_ssort();
 }
 
 int main()
