@@ -50,6 +50,8 @@ int main(void)
 }
 ```
 
+See [**example.c**](example.c) for demonstration and unit tests.
+
 # ckit.h
 
-The code is in public domain. See LICENSE.txt for more info.
+The code is in public domain. See [LICENSE](LICENSE) for more info.
