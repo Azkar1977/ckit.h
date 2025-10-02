@@ -260,7 +260,9 @@ void map_ensure_items(Map* m, int want)
 	// Init new islot tail to -1.
 	for (int i = m->capacity; i < nc; ++i) ns[i] = -1;
 
-	m->keys = nk; m->vals = nv; m->islot = ns;
+	m->keys = nk;
+	m->vals = nv;
+	m->islot = ns;
 	m->capacity = nc;
 }
 
