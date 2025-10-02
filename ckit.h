@@ -33,7 +33,7 @@
            const char *b = sintern("he" "llo");
            assert(a == b);
 
-    Public domain - No warranty implied, use at your own risk.
+    Public domain - Do whatever you want with this code.
 */
 
 #ifndef CKIT_H
