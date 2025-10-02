@@ -77,10 +77,10 @@
 //
 // Example:
 // 
-//     Map m = { 0 };
-//     for (uint64_t i = 0; i < 10; ++i)
+//     Map m = (Map){ 0 };
+//     for (int i = 0; i < 10; ++i)
 //         map_add(m, i, i * 10);
-//     for (uint64_t i = 0; i < 10; ++i)
+//     for (int i = 0; i < 10; ++i)
 //         printf("k : %d, v %d\n", (int)i, (int)map_get(m, i));
 //     map_free(m);
 
