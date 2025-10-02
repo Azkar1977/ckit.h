@@ -7,9 +7,7 @@ A tiny, single-header kit of high-performance C essentials.
 - Map (hashtable): `uint64_t → uint64_t`
 - String interning (stable pointer per unique string)
 
----
-
-## Usage
+# Usage
 
 A small program that exercises all three parts:
 
@@ -52,6 +50,6 @@ int main(void)
 
 See [**example.c**](example.c) for demonstration and unit tests.
 
-# ckit.h
+# License
 
 The code is in public domain. See [LICENSE](LICENSE) for more info.
