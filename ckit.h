@@ -33,7 +33,7 @@
            const char *b = sintern("he" "llo");
            assert(a == b);
 
-    Public domain - Do whatever you want with this code.
+    Public domain - No warranty implied, use at your own risk.
 */
 
 #ifndef CKIT_H
@@ -112,7 +112,7 @@ typedef struct Map
 #define map_free(m)       map_free_impl(map_ref(m))
 
 // Sorts m->keys as an array of strings lexicographically.
-#define map_ssort(m, ignore_case) map_ssort_impl(map_ref(m))
+#define map_ssort(m, ignore_case) map_ssort_impl(map_ref(m), ignore_case)
 
 // You can iterate over keys/vals as dense arrays. You may also swap elements in keys/vals
 // arrays freely using `map_swap(m, i, j)`. This is nice for implementing your own sorting on
@@ -174,7 +174,7 @@ int map_del_impl(Map* m, uint64_t key);
 void map_clear_impl(Map* m);
 void map_free_impl(Map* m);
 void map_swap_impl(Map* m, int i, int j);
-void map_ssort_impl(Map* m);
+void map_ssort_impl(Map* m, int ignore_case);
 
 const char* str_intern_range(const char* start, const char* end);
 
@@ -209,8 +209,6 @@ void* agrow(const void* a, int new_size, size_t element_size)
 	hdr->data = (char*)(hdr + 1); // For debugging convenience.
 	return (void*)(hdr + 1);
 }
-
-// Original hash table by Mattias Gustavsson: https://github.com/mattiasgustavsson/libs
 
 uint64_t map_hash(uint64_t x)
 {
@@ -448,32 +446,36 @@ void map_swap_impl(Map* m, int i, int j)
 }
 
 // Standard qsort style.
-void map_ssort_range(Map* m, int offset, int count)
+void map_ssort_range(Map* m, int offset, int count, int ignore_case)
 {
-	int count = m->size;
-	int offset = 0;
+	if (count <= 1) return;
 
 	#define CKIT_KEY(i) (m->keys[(offset) + (i)])
 
 	uint64_t pivot = CKIT_KEY(count - 1);
 	int lo = 0;
 	for (int hi = 0; hi < count - 1; ++hi) {
-		if (CKIT_KEY(hi) < pivot) {
+		const char* hi_key = (const char*)CKIT_KEY(hi);
+		const char* pivot_key = (const char*)pivot;
+		int swap = 0;
+		if (ignore_case) swap = _stricmp(hi_key, pivot_key);
+		else swap = strcmp(hi_key, pivot_key);
+		if (swap < 0) {
 			map_swap_impl(m, offset + lo, offset + hi);
 			++lo;
 		}
 	}
 	map_swap_impl(m, offset + (count - 1), offset + lo);
 
-	map_sort_range(m, offset, lo);
-	map_sort_range(m, offset + lo + 1, count - 1 - lo);
+	map_ssort_range(m, offset, lo, ignore_case);
+	map_ssort_range(m, offset + lo + 1, count - 1 - lo, ignore_case);
 
 	#undef CKIT_KEY
 }
 
-void map_ssort_impl(Map* m)
+void map_ssort_impl(Map* m, int ignore_case)
 {
-	map_ssort_range(m, 0, m->size);
+	map_ssort_range(m, 0, m->size, ignore_case);
 }
 
 void map_free_impl(Map* m)
