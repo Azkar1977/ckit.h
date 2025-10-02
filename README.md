@@ -15,36 +15,49 @@ A small program that exercises all three parts:
 #define CKIT_IMPLEMENTATION
 #include "ckit.h"
 
-#include <stdio.h>
-#include <assert.h>
-
 int main(void)
 {
-    // Dynamic array.
-    int* a = NULL;
-    for (int i = 0; i < 10; ++i) {
-        apush(a, i);
-    }
-    for (int i = 0; i < 10; ++i) {
-        printf("%d\n", a[i]);
-    }
-    printf("len=%d cap=%d\n", acount(a), acap(a));
-    afree(a);
+	// Dynamic array.
+	int* a = NULL;
+	for (int i = 0; i < 10; ++i) {
+		apush(a, i);
+	}
+	for (int i = 0; i < 10; ++i) {
+		printf("%d\n", a[i]);
+	}
+	printf("len=%d cap=%d\n", acount(a), acap(a));
+	afree(a);
 
-    // Map.
-    Map m = { 0 };
-    for (uint64_t i = 0; i < 10; ++i)
-        map_add(m, i, i * 10);
-    for (uint64_t i = 0; i < 10; ++i)
-        printf("k : %d, v %d\n", (int)i, (int)map_get(m, i));
-    map_free(m);
+	// Map.
+	Map m = (Map){ 0 };
+	for (int i = 0; i < 10; ++i)
+		map_add(m, i, i * 10);
+	for (int i = 0; i < 10; ++i)
+		printf("k : %d, v %d\n", (int)i, (int)map_get(m, i));
+	map_free(m);
 
-    // String interning.
-    const char *a = sintern("hello");
-    const char *b = sintern("he" "llo");
-    assert(a == b);
+	// Sort keys as strings.
+	m = (Map){ 0 };
+	const char* keys[] = { "Banana", "apple", "carrot", "Apple", "banana" };
 
-    return 0;
+	for (int i = 0; i < sizeof(keys)/sizeof(keys[0]); ++i) {
+		const char* s = sintern(keys[i]);
+		map_add(m, s, i);
+	}
+
+	// Sort case sensitive.
+	map_ssort(m, 0);
+
+	for (int i = 0; i < m.size; ++i) {
+		printf("key %s : val %d\n", (const char*)m.keys[i], (int)m.vals[i]);
+	}
+
+	// String interning.
+	const char *sa = sintern("hello");
+	const char *sb = sintern("he" "llo");
+	assert(sa == sb);
+
+	return 0;
 }
 ```
 
