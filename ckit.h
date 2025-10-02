@@ -210,6 +210,8 @@ void* agrow(const void* a, int new_size, size_t element_size)
 	return (void*)(hdr + 1);
 }
 
+// Map implementation originally by Mattias Gustavsson: https://github.com/mattiasgustavsson/libs
+
 uint64_t map_hash(uint64_t x)
 {
 	x += 0x9e3779b97f4a7c15ull;
