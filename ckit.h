@@ -218,7 +218,7 @@ uint64_t map_hash(uint64_t x)
 	x = (x ^ (x >> 30)) * 0xbf58476d1ce4e5b9ull;
 	x = (x ^ (x >> 27)) * 0x94d049bb133111ebull;
 	x ^= (x >> 31);
-	return x ? x : 1ull;
+	return x ? x : 1ull; // Maintain `0` as valid sentinel value.
 }
 
 void map_zero_slots(Map* m)
