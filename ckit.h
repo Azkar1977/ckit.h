@@ -505,6 +505,8 @@ uint64_t hash_fnv1a(const void* ptr, size_t sz)
 	return x;
 }
 
+// Interning method originall from Per Vognsen: https://github.com/pervognsen/bitwise
+
 typedef struct UniqueString
 {
 	size_t len;
