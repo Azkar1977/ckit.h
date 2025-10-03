@@ -318,9 +318,6 @@ void map_rebuild_slots(Map* m, int new_cap)
 	map_alloc_slots(m, new_cap);
 	if (m->slot_capacity == 0) return;
 
-	int mask = m->slot_capacity - 1;
-	(void)mask;
-
 	// Reinsert all dense items.
 	for (int idx = 0; idx < m->size; ++idx) {
 		uint64_t h = map_hash(m->keys[idx]);
@@ -335,7 +332,7 @@ void map_rebuild_slots(Map* m, int new_cap)
 	}
 }
 
-void map_maybe_expand_slots(Map* m)
+void map_grow(Map* m)
 {
 	if (m->slot_capacity == 0) {
 		map_rebuild_slots(m, 16);
@@ -374,7 +371,7 @@ uint64_t map_add_impl(Map* m, uint64_t key, uint64_t val)
 		}
 	}
 
-	map_maybe_expand_slots(m);
+	map_grow(m);
 	if (m->slot_capacity == 0) map_rebuild_slots(m, 16);
 
 	// Append to dense set.
@@ -497,6 +494,8 @@ void map_clear_impl(Map* m)
 	if (m->slot_capacity) map_zero_slots(m);
 }
 
+// Interning method originally from Per Vognsen: https://github.com/pervognsen/bitwise
+
 uint64_t hash_fnv1a(const void* ptr, size_t sz)
 {
 	uint64_t x = 0xcbf29ce484222325ull;
@@ -508,8 +507,6 @@ uint64_t hash_fnv1a(const void* ptr, size_t sz)
 	}
 	return x;
 }
-
-// Interning method originally from Per Vognsen: https://github.com/pervognsen/bitwise
 
 typedef struct UniqueString
 {
