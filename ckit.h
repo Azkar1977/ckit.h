@@ -66,7 +66,7 @@
 #define alast(a)      (a[asize(a) - 1])
 #define aclear(a)     (ACANARY(a), (a) ? AHDR(a)->size = 0 : 0)
 #define adel(a, i)    (a[i] = a[--AHDR(a)->size])
-#define afree(a)      do { ACANARY(a); free(AHDR(a)); } while (0)
+#define afree(a)      do { ACANARY(a); free(AHDR(a)); (a) = NULL; } while (0)
 
 //--------------------------------------------------------------------------------------------------
 // Map (hashtable) for uint64_t key <-> val mapping.
@@ -140,6 +140,9 @@ typedef struct Map
 
 #define sintern(s) str_intern_range(s, s + strlen(s))
 #define sintern_range(start, end) str_intern_range(start, end)
+
+// Frees all memory used by string interning so far. All prior strings are now invalid.
+void sintern_nuke();
 
 //--------------------------------------------------------------------------------------------------
 // "Private" implementation details (not intended as public API).
@@ -539,6 +542,20 @@ const char* str_intern_range(const char* start, const char* end)
 	map_add(g_interns, key, (uint64_t)(uintptr_t)node);
 
 	return node->str;
+}
+
+void sintern_nuke()
+{
+	for (int i = 0; i < g_interns.size; ++i) {
+		UniqueString* it = (UniqueString*)(uintptr_t)g_interns.vals[i];
+		while (it) {
+			UniqueString* next = it->next;
+			free(it);
+			it = next;
+		}
+	}
+
+	map_free(g_interns);
 }
 
 #endif // CKIT_IMPL
