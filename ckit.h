@@ -539,7 +539,7 @@ const char* str_intern_range(const char* start, const char* end)
 	node->str = (char*)(node + 1);
 	memcpy(node->str, start, len);
 	node->str[len] = '\0';
-	map_add(g_interns, key, (uint64_t)(uintptr_t)node);
+	map_add(g_interns, key, (uintptr_t)node);
 
 	return node->str;
 }
